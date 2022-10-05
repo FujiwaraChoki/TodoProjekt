@@ -5,3 +5,7 @@
 #tasksDiv {
       margin-top: 3%;
 }
+
+.hidden {
+      display: none;
+}
