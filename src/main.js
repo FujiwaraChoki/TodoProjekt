@@ -1,5 +1,5 @@
 const BASE_URL = "http://127.0.0.1:3000/";
-const tasksLists = document.querySelector("#taskTable");
+let tasksLists = document.querySelector("#tasksTable");
 let filterMethod;
 
 // Method to create a new task
@@ -13,12 +13,11 @@ const createTaskElement = (id, completed, title) => {
       <td>${title}</td>
       <td>${text_to_show}</td>`;
       return element;
-}
+};
 
-// Method to return all tasks from the local server
-const getTasks = (url_extension) => {
-      const url = `${BASE_URL}${url_extension}`;
-      const options = {
+const getCompletedTasks = () => {
+      let url = `${BASE_URL}tasks`;
+      let options = {
             method: "GET",
             headers: new Headers({
                   'Content-Type': 'application/json'
@@ -26,43 +25,80 @@ const getTasks = (url_extension) => {
       };
     
       fetch(url, options)
-      .then(response => {
-            return response.json();
-      })
-};
+            .then(response => response.json())
+            .then(commits => {
+                  const completedTasks = commits.filter(task => {
+                        task.completed === true
+                  });
+                  completedTasks.forEach((task) => {
+                        tasksLists.appendChild(createTaskElement(task.id, task.completed, task.title));
+                  });
+            });
 
-const getCompletedTasks = () => {
-      const completedTasks =  getTasks('tasks').filter(task => {task.completed});
-      completedTasks.forEach((task) => {
-            tasksLists.appendChild(createTaskElement(task.id, task.completed, task.title));
-      });
 };
 
 const getUncompletedTasks = () => {
-      const completedTasks =  getTasks('tasks').filter(task => task.completed === false);
-      completedTasks.forEach((task) => {
-            tasksLists.appendChild(createTaskElement(task.id, task.completed, task.title));
-      });
+      let url = `${BASE_URL}tasks`;
+      let options = {
+            method: "GET",
+            headers: new Headers({
+                  'Content-Type': 'application/json'
+            })
+      };
+    
+      fetch(url, options)
+            .then(response => response.json())
+            .then(commits => {
+                  const uncompletedTasks =  commits.filter(task => {task.completed === false});
+                  uncompletedTasks.forEach((task) => {
+                        tasksLists.appendChild(createTaskElement(task.id, task.completed, task.title));
+                  });
+            });
 };
 
 const getAllTasks = () => {
-      const data = getTasks('tasks');
-      data.forEach((task) => {
-            tasksLists.appendChild(createTaskElement(task.id, task.completed, task.title));
-      });
+      let url = `${BASE_URL}tasks`;
+      let options = {
+            method: "GET",
+            headers: new Headers({
+                  'Content-Type': 'application/json'
+            })
+      };
+    
+      fetch(url, options)
+            .then(response => response.json())
+            .then((tasks) => {
+                  tasks.forEach((task) => {
+                        // ! TODO Fix Please
+                        console.log(tasksLists);
+                        tasksLists.appendChild(createTaskElement(task.id, task.completed, task.title));
+                  });
+            });
+
 };
 
 const getSpecificTask = (id) => {
-      const data = getTasks('task');
-      const task = data.filter(task => task.id === id);
-      tasksLists.appendChild(createTaskElement(task.id, task.completed, task.title));
+      let url = `${BASE_URL}task/${id}`;
+      let options = {
+            method: "GET",
+            headers: new Headers({
+                  'Content-Type': 'application/json'
+            })
+      };
+    
+      fetch(url, options)
+            .then(response => response.json())
+            .then(commits => {
+                  tasksLists.appendChild(createTaskElement(commits.id, commits.completed, commits.title));
+            });
 };
 
 
 document.addEventListener('DOMContentLoaded', () => {
+      console.log(tasksLists);
       // Display all tasks in all cases once the page loads
       const dashboardBody = document.querySelector('#dashboardBody');
-      dashboardBody.addEventListener('load', getTasks('tasks'));
+      dashboardBody.addEventListener('load', getAllTasks());
       
       // Add Event Listener for the Selection of the Filtering method
       const selectFilterMethod = document.querySelector('#selectFilterMethod');
@@ -82,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             filterButton.addEventListener(('click'), () => {
                   switch(filterMethod) {
                         case "all":
-                              getTasks();
+                              getAllTasks();
                               break;
                         case "done":
                               getCompletedTasks();
