@@ -33,5 +33,6 @@ const getTasks = () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
+      let dashboardBody = document.querySelector('#dashboardBody');
+      dashboardBody.addEventListener('load', getTasks());
 });
