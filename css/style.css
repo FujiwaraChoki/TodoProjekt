@@ -1,5 +1,5 @@
 .container {
-      margin-top: 1%;
+      margin-top: 2%;
 }
 
 #tasksDiv {
@@ -8,4 +8,12 @@
 
 .hidden {
       display: none;
+}
+
+#project-description {
+      margin-top: 20%;
+}
+
+#animationTodoList {
+      margin-top: -16%;;
 }
