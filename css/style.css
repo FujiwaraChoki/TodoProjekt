@@ -6,16 +6,43 @@ body {
       background-position: center;
 }
 
+/*
+Styling based on Class
+*/
+
 .container {
       margin-top: 2%;
 }
 
-#tasksDiv {
-      margin-top: 3%;
-}
-
 .hidden {
       display: none;
+}
+
+.wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-left: 27%;
+}
+
+.musicControlButton {
+      height: 70px;
+      width: 150px;
+      font-size: 20px;
+      border-radius: 10px;
+}
+
+/*
+Styling based on IDs
+*/
+
+#tasksDiv {
+      margin-top: 3%;
+      background-color: #ffffff;
+      border-color: #000000;
+      border-style: solid;
+      border-radius: 10px;
 }
 
 #project-description {
@@ -27,24 +54,24 @@ body {
       ;
 }
 
-.wrapper {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-}
-
 #optionChoosingDiv {
       margin-left: -40%;
 }
 
-.musicControlButton {
-      height: 70px;
-      width: 150px;
-      font-size: 20px;
-      border-radius: 10px;
-}
-
 #volumeSlider {
       margin-left: 10%;
+}
+
+/*
+Responsive Design
+*/
+
+@media only screen and (max-width: 750px) {
+      .wrapper {
+            margin-left: 0%;
+      }
+
+      #optionChoosingDiv {
+            margin-right: -25%;
+      }
 }
