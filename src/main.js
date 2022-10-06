@@ -1,7 +1,10 @@
 const BASE_URL = "http://localhost:3000/";
+let token;
 let filterMethod;
+
 const options = {
       method: 'GET',
+      credentials: 'include',
       headers: new Headers({
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -12,17 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // Variables we need from the beginning
       const tasksList = document.getElementById('tasksTable');
 
-      /*
-      Declare functions here
-      */
       const error = () => {
             alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
       };
 
       const clean = (tasksList) => {
-            // remove all children elements from tasksList
-            while (tasksList.firstChild) {
-                  tasksList.removeChild(tasksList.firstChild);
+            // Remove all children elements from tasksList
+            for (let i = tasksList.children.length - 1; i >= 0; i--) {
+                  tasksList.children[i].remove();
             }
       };
 
@@ -39,20 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return element;
       };
 
-      const setCookie = (name, value, days) => {
-            var expires = "";
-            if (days) {
-                  var date = new Date();
-                  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                  expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-      }
-
-      const eraseCookie = (name) => {
-            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-      }
-
       const login = (email, password) => {
             let url = `${BASE_URL}auth/cookie/login`;
 
@@ -60,20 +46,23 @@ document.addEventListener('DOMContentLoaded', () => {
                   email: email,
                   password: password
             };
+
             options.method = 'POST';
             options.body = JSON.stringify(data);
             fetch(url, options)
-                  .then(response => {
-                        if (response.status === 200 && response) {
-                              alert('Login erfolgreich');
-                              setCookie('login', 'true', 1);
-                              setCookie('email', email, 1);
-                              setCookie('password', password, 1);
+            .then(response => {
+                  if (response.status === 200 && response) {
+                        console.log('Login erfolgreich');
+                        if(response.ok === true) {
+                              alert('Erfolgreich eingeloggt!');
                               window.location.href = 'dashboard.html';
                         } else {
-                              error();
+                              alert('Falsches E-Mail oder Passwort!');
                         }
-                  });
+                  } else {
+                        error();
+                  }
+            });
       };
 
       // Method to get completed Tasks
@@ -147,9 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // -------------------------------------------------------------------
       // Display all tasks in all cases once the page loads
       if (window.location.href === 'http://localhost:5500/src/dashboard.html') {
-            if (document.cookie.indexOf('login=true') === -1) {
-                  window.location.href = 'index.html';
-            }
             const dashboardBody = document.querySelector('#dashboardBody');
             dashboardBody.addEventListener('load', getAllTasks());
             // Add Event Listener for the Selection of the Filtering method
@@ -200,4 +186,17 @@ document.addEventListener('DOMContentLoaded', () => {
                   login(email, password);
             });
       }
+
+      const logoutButton = document.querySelector('#logoutButton');
+      logoutButton.addEventListener('click', () => {
+            fetch(`${BASE_URL}auth/cookie/logout`, options)
+                  .then(response => {
+                        if (response.status === 200) {
+                              alert('Logout erfolgreich');
+                              window.location.href = 'index.html';
+                        } else {
+                              error();
+                        }
+                  });
+      });
 });
