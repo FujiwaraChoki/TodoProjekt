@@ -17,3 +17,14 @@
 #animationTodoList {
       margin-top: -16%;;
 }
+
+.wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+}
+
+#optionChoosingDiv {
+      margin-left: -40%;
+}

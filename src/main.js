@@ -6,9 +6,7 @@ const options = {
       method: 'GET',
       credentials: 'include',
       headers: new Headers({
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-      })
+            'Content-Type': 'application/json'})
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,15 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       // Method to create a new task
-      const createTaskElement = (id, completed, title) => {
+      const createTaskElement = (id, completed, title, deleteButtonTableData) => {
             let element = document.createElement("tr");
             let text_to_show = 'Due';
             if (completed === 'true') {
                   text_to_show = 'Done';
             }
-            element.innerHTML = `<th scope="row">${id}</th>
-            <td>${title}</td>
-            <td>${text_to_show}</td>`;
+            element.innerHTML = `<th scope="row" style="margin-top: 2%;">${id}</th>
+            <td style="margin-top: 2%;">${title}</td>
+            <td style="margin-top: 2%;">${text_to_show}</td>`;
+            element.appendChild(deleteButtonTableData);
             return element;
       };
 
@@ -77,6 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                     task.completed === 'true';
                               });
                               completedTasks.forEach((task) => {
+                                    const deleteButton = document.createElement("td");
+                                    deleteButton.innerHTML = "<button scope='row' class='btn btn-danger'>Delete</button>";
+                                    deleteButton.addEventListener('click', () => {
+                                          deleteTask(task.id);
+                                    });
+                                    tasksList.appendChild(deleteButton);
                                     tasksList.appendChild(createTaskElement(task.id, task.completed, task.title));
                               });
                         }
@@ -97,6 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
 
                         uncompletedTasks.forEach((task) => {
+                              const deleteButton = document.createElement("td");
+                              deleteButton.innerHTML = "<button scope='row' class='btn btn-danger'>Delete</button>";
+                              deleteButton.addEventListener('click', () => {
+                                    deleteTask(task.id);
+                              });
+                              tasksList.appendChild(deleteButton);
                               tasksList.appendChild(createTaskElement(task.id, task.completed, task.title));
                         });
                   });
@@ -110,10 +121,18 @@ document.addEventListener('DOMContentLoaded', () => {
                   .then(response => response.json())
                   .then(tasks => {
                         tasks.forEach((task) => {
-                              tasksList.appendChild(createTaskElement(task.id, task.completed, task.title));
+                              let deleteButton = document.createElement("button");
+                              deleteButton.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'><path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/><path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/></svg>";
+                              deleteButton.setAttribute('class', 'btn btn-danger');
+                              deleteButton.setAttribute('scope', 'row');
+                              deleteButton.addEventListener('click', () => {
+                                    deleteTask(task.id);
+                              });
+                              deleteButton.style.marginTop = '2%';
+                              deleteButton.style.marginLeft = '2%';
+                              tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButton));
                         });
                   });
-
       };
 
       // Method to get a specific Task
@@ -129,8 +148,38 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                   })
                   .then(task => {
-                        tasksList.appendChild(createTaskElement(task.id, task.completed, task.title));
+                        const deleteButtonTableData = document.createElement("td");
+                        const deleteButton = document.createElement('button');
+                        deleteButton.innerText = "Delete";
+                        deleteButton.classList.add('btn', 'btn-danger');
+                        deleteButton.setAttribute('scope', 'row');
+                        deleteButton.addEventListener('click', () => {
+                              deleteTask(task.id);
+                        });
+                        tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButtonTableData));
                   });
+      };
+
+      const createTask = (title) => {
+            let url = `${BASE_URL}auth/cookie/tasks`;
+
+            let task = {
+                  'title': title
+            };
+
+            options.method = 'POST';
+            options.body = JSON.stringify(task);
+            fetch(url, options)
+            .then(response => {
+                  console.log(response);
+            });
+      };
+
+      const deleteTask = (id) => {
+            let url = `${BASE_URL}auth/cookie/task/${id}`;
+
+            options.method = 'DELETE';
+            fetch(url, options);
       };
 
       // -------------------------------------------------------------------
@@ -177,6 +226,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                   });
             });
+            // method: createTask
+            const createTaskButton = document.querySelector('#createTaskButton');
+            const taskTitle = document.querySelector('#taskTitle');
+            createTaskButton.addEventListener('click', () => {
+                  createTask(taskTitle.value);
+            });
+
+            // Delete Task when deleteButton is clicked
+
+
+            // Add Event Listener for the Create Task Button
       } else if (window.location.href === 'http://localhost:5500/src/login.html') {
             const loginButton = document.getElementById('loginButton');
             loginButton.addEventListener('click', (event) => {
@@ -189,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const logoutButton = document.querySelector('#logoutButton');
       logoutButton.addEventListener('click', () => {
+            options.method = 'POST';
             fetch(`${BASE_URL}auth/cookie/logout`, options)
                   .then(response => {
                         if (response.status === 200) {
