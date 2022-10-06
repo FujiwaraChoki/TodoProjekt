@@ -11,10 +11,13 @@
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <link rel="stylesheet" href="../css/style.css">
       <script>
-            const cookieDoesntExist = document.cookie.includes("m294");
-            if (cookieDoesntExist) {
-                  window.location.href = "login.html";
-            }
+            document.addEventListener('DOMContentLoaded', () => {
+                  const cookieDoesntExist = document.cookie.includes("m294");
+                  if (cookieDoesntExist) {
+                        alert(cookieDoesntExist);
+                        window.location.href = "login.html";
+                  }
+            });
       </script>
       <title>Dashboard</title>
 </head>

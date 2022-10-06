@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (response.status === 200 && response) {
                               console.log('Login erfolgreich');
                               if (response.ok === true) {
-                                    alert('Erfolgreich eingeloggt!');
                                     window.location.href = 'dashboard.html';
                               } else {
                                     alert('Falsches E-Mail oder Passwort!');
