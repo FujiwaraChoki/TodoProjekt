@@ -6,7 +6,8 @@ const options = {
       method: 'GET',
       credentials: 'include',
       headers: new Headers({
-            'Content-Type': 'application/json'})
+            'Content-Type': 'application/json'
+      })
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -50,24 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
             options.method = 'POST';
             options.body = JSON.stringify(data);
             fetch(url, options)
-            .then(response => {
-                  if (response.status === 200 && response) {
-                        console.log('Login erfolgreich');
-                        if(response.ok === true) {
-                              alert('Erfolgreich eingeloggt!');
-                              window.location.href = 'dashboard.html';
+                  .then(response => {
+                        if (response.status === 200 && response) {
+                              console.log('Login erfolgreich');
+                              if (response.ok === true) {
+                                    alert('Erfolgreich eingeloggt!');
+                                    window.location.href = 'dashboard.html';
+                              } else {
+                                    alert('Falsches E-Mail oder Passwort!');
+                              }
                         } else {
-                              alert('Falsches E-Mail oder Passwort!');
+                              error();
                         }
-                  } else {
-                        error();
-                  }
-            });
+                  });
       };
 
       const updateTask = (id, new_title) => {
             let url = `${BASE_URL}tasks`;
-            
+
             const data = {
                   id: id,
                   title: new_title
@@ -105,7 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                     updateButton.addEventListener('click', () => {
                                           updateTask(task.id, prompt('Enter a new title for the task'));
                                     });
-                                    tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButton, updateButton));                              });
+                                    tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButton, updateButton));
+                              });
                         }
                   });
 
@@ -134,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
                               });
                               deleteButton.style.marginTop = '2%';
                               deleteButton.style.marginLeft = '2%';
-                              
+
                               let updateButton = document.createElement("button");
                               updateButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>'
                               updateButton.style.marginTop = '2%';
@@ -216,9 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
             options.method = 'POST';
             options.body = JSON.stringify(task);
             fetch(url, options)
-            .then(response => {
-                  console.log(response);
-            });
+                  .then(response => {
+                        console.log(response);
+                  });
       };
 
       const deleteTask = (id) => {
