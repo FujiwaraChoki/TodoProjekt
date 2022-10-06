@@ -138,8 +138,6 @@
                                     ];
                                     // Random songIndex between 1 and 3
                                     const songIndex = Math.floor(Math.random() * (songs.length));
-                                    console.log(songIndex);
-                                    console.log(songs[songIndex]);
                                     const song = new Audio(songs[songIndex]);
                                     playButton.addEventListener("click", () => {
                                           song.play();

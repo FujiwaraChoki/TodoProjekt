@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://127.0.0.1:3000/";
 let token;
 let filterMethod;
 
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // -------------------------------------------------------------------
       // Display all tasks in all cases once the page loads
-      if (window.location.href === 'http://localhost:5500/src/dashboard.html') {
+      if (window.location.href === 'http://127.0.0.1:5500/src/dashboard.html') {
             const dashboardBody = document.querySelector('#dashboardBody');
             dashboardBody.addEventListener('load', getAllTasks());
             // Add Event Listener for the Selection of the Filtering method
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             // Add Event Listener for the Create Task Button
-      } else if (window.location.href === 'http://localhost:5500/src/login.html') {
+      } else if (window.location.href === 'http://127.0.0.1:5500/src/login.html') {
             const loginButton = document.getElementById('loginButton');
             loginButton.addEventListener('click', (event) => {
                   event.preventDefault();
