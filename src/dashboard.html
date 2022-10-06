@@ -35,13 +35,31 @@
                         <li class="nav-item">
                               <a class="nav-link" href="dashboard.html">Dashboard</a>
                         </li>
+                        <li class="nav-item">
+                              <a class="nav-link" href="#" id="playButton">Play Music</a>
+                        </li>
+                        <li class="nav-item">
+                              <a class="nav-link" href="#" id="pauseButton">Pause Music</a>
+                        </li>
+                        <script>
+                              let playButton = document.querySelector("#playButton");
+                              let pauseButton = document.querySelector("#pauseButton");
+
+                              var song = new Audio('../img/song.mp3');
+                              playButton.addEventListener("click", () => {
+                                    song.play();
+                              });
+                              pauseButton.addEventListener("click", () => {
+                                    song.pause();
+                              });
+                        </script>
                   </ul>
             </div>
       </nav>
       <h1 class="text-center" style="margin-top: 10px;">
             Dashboard
       </h1>
-      <div class="container" id="tasksDiv">
+      <div class="container" id="tasksDiv" style="background-image: none;">
             <table class="table table-striped">
                   <thead>
                         <tr>
