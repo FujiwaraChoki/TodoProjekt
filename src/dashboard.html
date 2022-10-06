@@ -57,9 +57,9 @@
                   <thead>
                         <tr>
                               <th scope="col">ID</th>
-                              <th scope="col">Title</th>
+                              <th scope="col">Titel</th>
                               <th scope="col">Status</th>
-                              <th scope="col">Action</th>
+                              <th scope="col">Aktion</th>
                         </tr>
                   </thead>
                   <tbody id="tasksTable"></tbody>
@@ -71,15 +71,14 @@
             <div class="container" id="createTaskDiv">
                   <div>
                         <div class="col-12">
-                              <h3>Create Task</h3>
-                              <label for="taskTitle">Title</label>
+                              <h3>Aufgabe erstellen</h3>
+                              <label for="taskTitle">Titel</label>
                               <br>
                               <input type="text" id="taskTitle" name="taskTitle">
                               <br>
                               <br>
                               <button type="button" class="btn
-                                          btn-primary" id="createTaskButton">Create
-                                    Task</button>
+                                          btn-primary" id="createTaskButton">Erstellen</button>
                         </div>
                   </div>
             </div>
@@ -88,26 +87,25 @@
                   <div>
                         <div class="col-12">
                               <h3>Filter</h3>
-                              <label for="taskTitle">Choose an option</label>
+                              <label for="taskTitle">Wählen Sie eine Option</label>
                               <br>
                               <select id="selectFilterMethod">
-                                    <option value="all">All</option>
-                                    <option value="specificTask">Specific
-                                          Task</option>
-                                    <option value="due">Due</option>
-                                    <option value="done">Done</option>
+                                    <option value="all">Alle</option>
+                                    <option value="specificTask">Spezifische Aufgabe</option>
+                                    <option value="due">Offen</option>
+                                    <option value="done">Erledigt</option>
                               </select>
                               <!--Ask for Task ID-->
                               <div id="askForTaskID" class="hidden">
                                     <br>
-                                    <label for="taskID">Task-ID</label>
+                                    <label for="taskID">Aufgabe-ID</label>
                                     <br>
                                     <input type="text" id="taskID" name="taskID">
                               </div>
                               <br>
                               <br>
                               <button type="button" class="btn
-                                          btn-primary" id="filterButton">Filter</button>
+                                          btn-primary" id="filterButton">Filtern</button>
                         </div>
                   </div>
             </div>
@@ -117,16 +115,17 @@
             <div class="modal-dialog" role="document">
                   <div class="modal-content">
                         <div class="modal-header">
-                              <h5 class="modal-title" id="musicControlLabel">Music Controls</h5>
+                              <h5 class="modal-title" id="musicControlLabel">Musik Kontrolle</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                               </button>
                         </div>
                         <div class="modal-body">
-                              <button id="playButton" class="musicControlButton">Play Music</button>
-                              <button id="pauseButton" class="musicControlButton">Pause Music</button>
+                              <button id="playButton" class="musicControlButton">Musik spielen</button>
+                              <button id="pauseButton" class="musicControlButton">Musik pausieren</button>
                               <div class="slidecontainer">
-                                    <input type="range" min="0" max="100" value="50" class="slider" id="volumeSlider" style="width: 200px;">
+                                    <input type="range" min="0" max="100" value="50" class="slider" id="volumeSlider"
+                                          style="width: 200px;">
                               </div>
                               <script>
                                     const playButton = document.querySelector("#playButton");
@@ -146,7 +145,7 @@
                                           song.play();
                                     });
 
-                                    musicVolumeFromSlider.addEventListener("input", function() {
+                                    musicVolumeFromSlider.addEventListener("input", function () {
                                           song.volume = musicVolumeFromSlider.value / 100;
                                     });
 
@@ -157,7 +156,7 @@
                         </div>
                         <div class="modal-footer">
                               <button type="button" class="btn
-                                          btn-secondary" data-dismiss="modal">Close</button>
+                                          btn-secondary" data-dismiss="modal">Schliessen</button>
                         </div>
                   </div>
             </div>
@@ -166,8 +165,9 @@
       <div class="container">
             <div class="row">
                   <div class="col text-center">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#musicControlModal">
-                              Music Controls
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target="#musicControlModal">
+                              Musik Kontrolle
                         </button>
                   </div>
             </div>

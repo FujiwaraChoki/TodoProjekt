@@ -281,7 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   createTask(taskTitle.value);
             });
 
-            // Delete Task when deleteButton is clicked
+            // TODO: Add Checkbox to mark a task as completed
+            
 
 
             // Add Event Listener for the Create Task Button
