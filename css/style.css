@@ -37,3 +37,14 @@ body {
 #optionChoosingDiv {
       margin-left: -40%;
 }
+
+.musicControlButton {
+      height: 70px;
+      width: 150px;
+      font-size: 20px;
+      border-radius: 10px;
+}
+
+#volumeSlider {
+      margin-left: 10%;
+}
