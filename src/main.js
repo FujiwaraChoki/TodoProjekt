@@ -26,15 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       // Method to create a new task
-      const createTaskElement = (id, completed, title, deleteButtonTableData, updateButton) => {
+      const createTaskElement = (checkbox, id, completed, title, deleteButtonTableData, updateButton) => {
             let element = document.createElement("tr");
-            let text_to_show = 'Due';
+            let text_to_show = 'Offen';
             if (completed === 'true') {
-                  text_to_show = 'Done';
+                  text_to_show = 'Erledigt';
             }
-            element.innerHTML = `<th scope="row" style="margin-top: 2%;">${id}</th>
+            element.innerHTML = `
+            <td style="margin-top: 2%;">${id}</td>
             <td style="margin-top: 2%;">${title}</td>
-            <td style="margin-top: 2%;">${text_to_show}</td>`;
+            <td style="margin-top: 2%;">${text_to_show}</td>
+            <td style="margin-top: 2%;">${checkbox}</td>`;
+            //element.appendChild(checkbox);
             element.appendChild(deleteButtonTableData);
             element.appendChild(updateButton);
             return element;
@@ -65,12 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
                   });
       };
 
-      const updateTask = (id, new_title) => {
+      const updateTask = (id, new_title, status) => {
             let url = `${BASE_URL}tasks`;
 
             const data = {
                   id: id,
-                  title: new_title
+                  title: new_title,
+                  completed: status
             };
 
             options.method = 'PUT';
@@ -103,9 +107,21 @@ document.addEventListener('DOMContentLoaded', () => {
                                     updateButton.setAttribute('class', 'btn btn-primary');
                                     updateButton.setAttribute('scope', 'row');
                                     updateButton.addEventListener('click', () => {
-                                          updateTask(task.id, prompt('Enter a new title for the task'));
+                                          updateTask(task.id, prompt('Neuer Titel:'));
                                     });
-                                    tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButton, updateButton));
+                                    const checkbox = document.createElement("input");
+                                    checkbox.setAttribute('type', 'checkbox');
+                                    checkbox.setAttribute('class', 'form-check-input');
+                                    checkbox.setAttribute('id', 'flexCheckDefault');
+                                    checkbox.setAttribute('style', 'margin-top: 2%;');
+                                    checkbox.addEventListener('change', () => {
+                                          if (checkbox.checked === true) {
+                                                updateTask(task.id, task.title, 'true');
+                                          } else {
+                                                updateTask(task.id, task.title, 'false');
+                                          }
+                                    });
+                                    tasksList.appendChild(createTaskElement(checkbox, task.id, task.completed, task.title, deleteButton, updateButton));
                               });
                         }
                   });
@@ -143,9 +159,21 @@ document.addEventListener('DOMContentLoaded', () => {
                               updateButton.setAttribute('class', 'btn btn-primary');
                               updateButton.setAttribute('scope', 'row');
                               updateButton.addEventListener('click', () => {
-                                    updateTask(task.id, prompt('Enter a new title for the task'));
+                                    updateTask(task.id, prompt('Neuer Titel:'));
                               });
-                              tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButton, updateButton));
+                              const checkbox = document.createElement("input");
+                              checkbox.setAttribute('type', 'checkbox');
+                              checkbox.setAttribute('class', 'form-check-input');
+                              checkbox.setAttribute('id', 'flexCheckDefault');
+                              checkbox.setAttribute('style', 'margin-top: 2%;');
+                              checkbox.addEventListener('change', () => {
+                                    if (checkbox.checked === true) {
+                                          updateTask(task.id, task.title, 'true');
+                                    } else {
+                                          updateTask(task.id, task.title, 'false');
+                                    }
+                              });
+                              tasksList.appendChild(createTaskElement(checkbox, task.id, task.completed, task.title, deleteButton, updateButton));
                         });
                   });
       };
@@ -171,13 +199,25 @@ document.addEventListener('DOMContentLoaded', () => {
                               let updateButton = document.createElement("button");
                               updateButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>'
                               updateButton.addEventListener('click', () => {
-                                    updateTask(task.id, prompt('Enter a new title for the task'));
+                                    updateTask(task.id, prompt('Neuer Titel:'));
                               });
                               updateButton.style.marginTop = '2%';
                               updateButton.style.marginLeft = '2%';
                               updateButton.setAttribute('class', 'btn btn-primary');
                               updateButton.setAttribute('scope', 'row');
-                              tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButton, updateButton));
+                              const checkbox = document.createElement("input");
+                              checkbox.setAttribute('type', 'checkbox');
+                              checkbox.setAttribute('class', 'form-check-input');
+                              checkbox.setAttribute('id', 'flexCheckDefault');
+                              checkbox.setAttribute('style', 'margin-top: 2%;');
+                              checkbox.addEventListener('change', () => {
+                                    if (checkbox.checked === true) {
+                                          updateTask(task.id, task.title, 'true');
+                                    } else {
+                                          updateTask(task.id, task.title, 'false');
+                                    }
+                              });
+                              tasksList.appendChild(createTaskElement(checkbox, task.id, task.completed, task.title, deleteButton, updateButton));
                         });
                   });
       };
@@ -195,7 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                   })
                   .then(task => {
-                        const deleteButtonTableData = document.createElement("td");
                         const deleteButton = document.createElement('button');
                         deleteButton.innerText = "Delete";
                         deleteButton.classList.add('btn', 'btn-danger');
@@ -203,7 +242,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         deleteButton.addEventListener('click', () => {
                               deleteTask(task.id);
                         });
-                        tasksList.appendChild(createTaskElement(task.id, task.completed, task.title, deleteButtonTableData));
+                        const updateButton = document.createElement('button');
+                        updateButton.innerText = "Update";
+                        updateButton.classList.add('btn', 'btn-primary');
+                        updateButton.setAttribute('scope', 'row');
+                        updateButton.addEventListener('click', () => {
+                              updateTask(task.id, prompt('Neuer Titel:'));
+                        });
+                        const checkbox = document.createElement("input");
+                        checkbox.setAttribute('type', 'checkbox');
+                        checkbox.setAttribute('class', 'form-check-input');
+                        checkbox.setAttribute('id', 'flexCheckDefault');
+                        checkbox.setAttribute('style', 'margin-top: 2%;');
+                        checkbox.addEventListener('change', () => {
+                              if (checkbox.checked === true) {
+                                    updateTask(task.id, task.title, 'true');
+                              } else {
+                                    updateTask(task.id, task.title, 'false');
+                              }
+                        });
+                        tasksList.appendChild(createTaskElement(checkbox, task.id, task.completed, task.title, deleteButton, updateButton));
                   });
       };
 
