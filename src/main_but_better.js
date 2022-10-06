@@ -182,9 +182,9 @@ const renderTasks = (id, filter = 'all') => {
                 // When user clicks on the checkbox, update the task to the given status accordingly.
                 checkboxElement.addEventListener('change', () => {
                     if (checkboxElement.checked) {
-                        updateTask(currentTask.id, currentTask.title, true);
+                        updateTask(currentTask.id, completed = true);
                     } else {
-                        updateTask(currentTask.id, currentTask.title, false);
+                        updateTask(currentTask.id, completed = false);
                     }
                 });
 
@@ -303,23 +303,19 @@ const updateTask = (taskId, title = null, completed = null) => {
     // Add the body to the request (and convert to JSON in the process)
     if (title) {
         OPTIONS.body = JSON.stringify({
-            id: taskId,
+            id: parseInt(taskId),
             title: title
         });
     } else if (title && completed) {
         OPTIONS.body = JSON.stringify({
-            id: taskId,
+            id: parseInt(taskId),
             title: title,
             completed: completed
         });
     } else if (completed) {
         OPTIONS.body = JSON.stringify({
-            id: taskId,
+            id: parseInt(taskId),
             completed: completed
-        });
-    } else {
-        OPTIONS.body = JSON.stringify({
-            id: taskId
         });
     }
     fetch(url, OPTIONS);
