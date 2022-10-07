@@ -3,9 +3,10 @@ Element styling
 */
 
 body {
-      background-image: url("https://images.unsplash.com/photo-1554034483-04fda0d3507b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #3ff068);
+      background-size: 400% 400%;
+      animation: gradient 5s ease infinite;
       background-repeat: no-repeat;
-      background-size: cover;
       background-attachment: fixed;
       background-position: center;
       margin: 0 auto;
@@ -14,6 +15,20 @@ body {
       /* To hide the rest coming out of the dashboard */
       overflow-x: hidden;
       width: calc(100% - 0px);
+}
+
+@keyframes gradient {
+      0% {
+            background-position: 0% 50%;
+      }
+
+      50% {
+            background-position: 100% 50%;
+      }
+
+      100% {
+            background-position: 0% 50%;
+      }
 }
 
 label {
@@ -30,7 +45,8 @@ input[type="checkbox"]:checked {
       accent-color: rgb(101, 204, 72);
 }
 
-input, select {
+input,
+select {
       border-radius: 10px;
 }
 
@@ -68,7 +84,6 @@ Styling based on IDs
 #tasksDiv {
       margin-top: 3%;
       background-color: #ffffff;
-      border-color: #000000;
       border-style: solid;
       border-radius: 10px;
 }

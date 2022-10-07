@@ -24,7 +24,7 @@ const error = (err) => {
 const clearScreen = () => {
     // Remove all children from the table.
     let children = TASKSLIST.children;
-    for(let child of children) {
+    for (let child of children) {
         TASKSLIST.removeChild(child);
     }
 };
@@ -74,7 +74,7 @@ const renderTasks = (id, filter) => {
                     break;
             }
             resultFromQuery.forEach((currentTask) => {
-                if(!(filter === 'all')) {
+                if (!(filter === 'all')) {
                     clearScreen();
                 }
 
@@ -121,10 +121,10 @@ const renderTasks = (id, filter) => {
                 updateButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>';
                 //updateButton.style.marginRight = '-200px';
                 // Event Listeners
-                
+
                 // When user clicks on the checkbox, update the task to the given status accordingly.
-                checkboxElement.addEventListener('change', () => 
-                    updateTask({...currentTask, completed: !currentTask.completed})
+                checkboxElement.addEventListener('change', () =>
+                    updateTask({ ...currentTask, completed: !currentTask.completed })
                 );
 
                 checkboxElement.checked = currentTask.completed;
@@ -134,7 +134,7 @@ const renderTasks = (id, filter) => {
                     titleElement.removeAttribute('readonly');
                     titleElement.addEventListener('blur', () => {
                         let new_title = titleElement.value;
-                        updateTask({...currentTask, title: new_title});
+                        updateTask({ ...currentTask, title: new_title });
                         titleElement.setAttribute('readonly', 'true');
                     });
                 });
@@ -160,7 +160,7 @@ const renderTasks = (id, filter) => {
                     deleteButtonParent);
 
                 TASKSLIST.appendChild(tableRow);
-                
+
             });
         });
 };
@@ -190,15 +190,13 @@ const login = (email, password) => {
                     window.location.href = 'dashboard.html';
                     localStorage.setItem('login', true);
                 } else {
-                    error('Falsches E-Mail oder Passwort!');
-                    let emailField = document.getElementById('email-group');
-                    let passwordField = document.getElementById('password-group');
-                    emailField.style.borderColor = 'red';
-                    passwordField.style.borderColor = 'red';
-                    localStorage.setItem('login', false);
+                    alert('Invalides Email oder Passwort');
                 }
             } else {
-                error('Etwas ist schief gelaufen!');
+                let emailField = document.getElementById('email-group');
+                let passwordField = document.getElementById('password-group');
+                emailField.style.borderColor = 'red';
+                passwordField.style.borderColor = 'red';
                 localStorage.setItem('login', false);
             }
         });
@@ -313,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add an Event Listener for the filter button.
             filterButton.addEventListener('click', (evnt2) => {
-                
+
                 clearScreen();
                 evnt2.preventDefault();
                 // Check the provided filter-method.
@@ -346,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             });
         });
-        
+
     } else if (window.location.href === ('http://localhost:5500/src/login.html' || 'http://localhost:5500/src/login.html?')) {
         // Get the elements needed for the login.
         let loginForm = document.querySelector('#loginForm');
