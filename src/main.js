@@ -188,15 +188,18 @@ const login = (email, password) => {
             if (response.status === 200 && response) {
                 if (response.ok) {
                     window.location.href = 'dashboard.html';
+                    localStorage.setItem('login', true);
                 } else {
                     error('Falsches E-Mail oder Passwort!');
                     let emailField = document.getElementById('email-group');
                     let passwordField = document.getElementById('password-group');
                     emailField.style.borderColor = 'red';
                     passwordField.style.borderColor = 'red';
+                    localStorage.setItem('login', false);
                 }
             } else {
                 error('Etwas ist schief gelaufen!');
+                localStorage.setItem('login', false);
             }
         });
 };
@@ -259,41 +262,6 @@ const updateTask = (task) => {
 
     fetch(url, OPTIONS);
 };
-
-function getCookie(name) {
-    var dc = document.cookie;
-    var prefix = name + "=";
-    var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-        begin = dc.indexOf(prefix);
-        if (begin != 0) return null;
-    }
-    else
-    {
-        begin += 2;
-        var end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-        end = dc.length;
-        }
-    }
-    // because unescape has been deprecated, replaced with decodeURI
-    //return unescape(dc.substring(begin + prefix.length, end));
-    return decodeURI(dc.substring(begin + prefix.length, end));
-} 
-
-function isLoggedIn(){
-    fetch("http://localhost:3000/auth/cookie/status", {
-        method: "GET",
-        credentials: "include"
-    })
-    .then((response) => {
-        if(response.status === 401) {
-            return false;
-        } else {
-            return true;
-        }
-    });
-}
 
 /*
 Check the current site and run methods accordingly.
@@ -387,13 +355,5 @@ document.addEventListener('DOMContentLoaded', () => {
             let password = document.querySelector('#passwordInput').value;
             login(email, password);
         });
-        if(isLoggedIn()) {
-            let alert = document.createElement('div');
-            alert.classList.add('alert', 'alert-info');
-            alert.setAttribute('role', 'alert');
-            alert.innerHTML = 'Sie sind bereits eingeloggt!';
-            document.querySelector('#loginForm').appendChild(alert);
-
-        }
     }
 });

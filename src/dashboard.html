@@ -43,6 +43,14 @@
                   </ul>
             </div>
       </nav>
+      <script>
+            if(localStorage.getItem('login') === (false || null)) {
+                  localStorage.setItem('displayNoLoginAlert', true);
+                  window.location.href = 'login.html';
+            } else {
+                  localStorage.setItem('displayNoLoginAlert', null);
+            }
+      </script>
       <h1 class="text-center" style="margin-top: 10px;">
             Dashboard
       </h1>
