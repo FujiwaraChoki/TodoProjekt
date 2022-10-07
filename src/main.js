@@ -36,6 +36,10 @@ An optional parameter can be provided
 */
 
 const renderTasks = (id, filter) => {
+    if(!localStorage.getItem('login') === true) {
+        window.location.href = "login.html";
+        return;
+    }
     // Create the second base URL.
     let url = BASE_URL + 'tasks';
 
@@ -187,17 +191,16 @@ const login = (email, password) => {
             // Check response status
             if (response.status === 200 && response) {
                 if (response.ok) {
-                    window.location.href = 'dashboard.html';
                     localStorage.setItem('login', true);
+                    window.location.href = 'dashboard.html';
                 } else {
                     alert('Invalides Email oder Passwort');
+                    let emailField = document.getElementById('email-group');
+                    let passwordField = document.getElementById('password-group');
+                    emailField.style.borderColor = 'red';
+                    passwordField.style.borderColor = 'red';
+                    localStorage.setItem('login', false);
                 }
-            } else {
-                let emailField = document.getElementById('email-group');
-                let passwordField = document.getElementById('password-group');
-                emailField.style.borderColor = 'red';
-                passwordField.style.borderColor = 'red';
-                localStorage.setItem('login', false);
             }
         });
 };
