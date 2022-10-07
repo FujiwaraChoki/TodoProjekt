@@ -1,6 +1,6 @@
 // ! Main
 // ! Declare constants
-const BASE_URL = "http://127.0.0.1:3000/";
+const BASE_URL = "http://localhost:3000/";
 const TASKSLIST = document.getElementById('tasksTable');
 const OPTIONS = {
     method: 'GET',
@@ -23,8 +23,9 @@ const error = (err) => {
 
 const clearScreen = () => {
     // Remove all children from the table.
-    while (TASKSLIST.firstChild) {
-        TASKSLIST.removeChild(TASKSLIST.firstChild);
+    let children = TASKSLIST.children;
+    for(let child of children) {
+        TASKSLIST.removeChild(child);
     }
 };
 
@@ -35,7 +36,6 @@ An optional parameter can be provided
 */
 
 const renderTasks = (id, filter = 'all') => {
-    clearScreen();
     // Create the second base URL.
     let url = BASE_URL + 'tasks';
 
@@ -211,6 +211,7 @@ const renderTasks = (id, filter = 'all') => {
                 tableRow.append(checkboxElementParent, idElement, titleElement, statusElement, updateButtonParent, deleteButtonParent);
 
                 TASKSLIST.appendChild(tableRow);
+                
             });
         });
 };
@@ -317,7 +318,7 @@ const updateTask = (taskId, title = null, completed = null) => {
 Check the current site and run methods accordingly.
 */
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.href === 'http://127.0.0.1:5500/src/dashboard.html') {
+    if (window.location.href === 'http://localhost:5500/src/dashboard.html') {
         // Get the elements needed for the task creation.
         const createTaskButton = document.querySelector('#createTaskButton');
         const taskTitle = document.querySelector('#taskTitle');
@@ -361,13 +362,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add an Event Listener for the filter button.
             filterButton.addEventListener('click', (evnt2) => {
+                clearScreen();
                 evnt2.preventDefault();
                 // Check the provided filter-method.
                 switch (filterMethod) {
                     case 'all':
                         // Render all tasks.
                         clearScreen();
-                        renderTasks();
+                        renderTasks(0);
                         break;
 
                     case 'specificTask':
@@ -396,12 +398,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             });
         });
-    } else if (window.location.href === 'http://127.0.0.1:5500/src/login.html') {
-        document.getElementById('loginButton').addEventListener('click', (event) => {
-            event.preventDefault();
+    } else if (window.location.href === ('http://localhost:5500/src/login.html' || 'http://localhost:5500/src/login.html?')) {
+        // Get the elements needed for the login.
+        let loginButton = document.querySelector('#loginButton');
+        loginButton.addEventListener('click', () => {
             let email = document.querySelector('#emailInput').value;
             let password = document.querySelector('#passwordInput').value;
             login(email, password);
         });
     }
 });
+
