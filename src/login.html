@@ -87,7 +87,7 @@
                   document.querySelector('#alreadyLoggedInPrompt').classList.remove('hidden');
             }
 
-            if(!(localStorage.getItem('displayNoLoginAlert') === false && localStorage.getItem('login') === true)) {
+            if(!(localStorage.getItem('displayNoLoginAlert') === false && localStorage.getItem('login') === true) && document.referrer === 'dashboard.html') {
                   document.querySelector('#loginPrompt').classList.remove('hidden');
             }
       </script>
