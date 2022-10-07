@@ -87,8 +87,7 @@
                   document.querySelector('#alreadyLoggedInPrompt').classList.remove('hidden');
             }
 
-            if(localStorage.getItem('displayNoLoginAlert')) {
-                  localStorage.setItem('displayNoLoginAlert', false);
+            if(!(localStorage.getItem('displayNoLoginAlert') === false && localStorage.getItem('login') === true)) {
                   document.querySelector('#loginPrompt').classList.remove('hidden');
             }
       </script>
