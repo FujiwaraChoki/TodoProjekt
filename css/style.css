@@ -11,10 +11,27 @@ body {
       margin: 0 auto;
       padding: 0;
       width: 100%;
+      /* To hide the rest coming out of the dashboard */
+      overflow-x: hidden;
+      width: calc(100% - 0px);
 }
 
 label {
       font-size: 1.2rem;
+}
+
+input[type="checkbox"] {
+      margin-top: 8px;
+      height: 20px;
+      width: 25px;
+}
+
+input[type="checkbox"]:checked {
+      accent-color: rgb(101, 204, 72);
+}
+
+input, select {
+      border-radius: 10px;
 }
 
 /*
@@ -34,11 +51,11 @@ Styling based on Class
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      margin-left: 27%;
+      margin-left: 0;
 }
 
 .musicControlButton {
-      height: 70px;
+      height: 80px;
       width: 150px;
       font-size: 20px;
       border-radius: 10px;
