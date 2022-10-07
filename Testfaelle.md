@@ -6,7 +6,4 @@ Ein Projekt von <a href="https://github.com/FujiwaraChoki">Sami Hindi</a>
 
 # Testfälle
 
-| Nummer      | Datum		| Titel		|
-| :---        |    :----:   |
-| Header      | Title       |
-| Paragraph   | Text        |
+<a href="Testfaelle.png">Link zu den Testfaellen.</a>

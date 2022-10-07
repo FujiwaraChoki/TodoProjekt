@@ -6,3 +6,9 @@ Diese Web Applikation wurde in HTML, CSS und vorallem in JavaScript geschrieben.
 
 # Bedienung
 Um diese Web App zu nutzen, ist ein NodeJS Backend nötig, dass nur auf Anfrage erhältlich ist.
+
+# Authoren
+* Sami Hindi
+
+# Testfälle
+<a href="Testfaelle.md">Testfaelle</a>
