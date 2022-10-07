@@ -17,4 +17,4 @@ Wenn das alles erledigt ist, schreiben Sie die folgenden Commands in ihren Termi
 * Sami Hindi
 
 # Testfälle
-<a href="Testfaelle.md">Testfaelle</a>
+<a href="Testfaelle.md">Testfälle</a>
